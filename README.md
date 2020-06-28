@@ -1,3 +1,4 @@
+![MIT](https://img.shields.io/badge/license-MIT-blue)
 # d4rl-pybullet
 Datasets for Data-Driven Deep Reinforcement Learning with Pybullet environments.
 This work is intending to provide datasets for data-driven deep reinforcement learning with open-sourced bullet simulator, which encourages more people to join this community.
