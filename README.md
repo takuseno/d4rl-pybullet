@@ -1,10 +1,13 @@
 ![MIT](https://img.shields.io/badge/license-MIT-blue)
 # d4rl-pybullet
 Datasets for Data-Driven Deep Reinforcement Learning with Pybullet environments.
-This work is intending to provide datasets for data-driven deep reinforcement learning with open-sourced bullet simulator, which encourages more people to join this community.
+This work is intending to provide datasets for data-driven deep reinforcement
+learning with open-sourced bullet simulator, which encourages more people to
+join this community.
 
 This repository is built on top of [d4rl](https://github.com/rail-berkeley/d4rl).
-However, currently, it is impossible to import d4rl without checking MuJoCo activation keys, which fails the program.
+However, currently, it is impossible to import d4rl without checking MuJoCo
+activation keys, which fails the program.
 Thus, `d4rl_pybullet.offline_env` is directly copied from [d4rl repository](https://github.com/rail-berkeley/d4rl/blob/1899859e3ebdac8f587abbe9cb1663761be69141/d4rl/offline_env.py).
 
 ## usage
@@ -20,6 +23,9 @@ TODO.
 | hopper-bullet-random-v0 | HopperBulletEnv-v0 |
 | hopper-bullet-medium-v0 | HopperBulletEnv-v0 |
 | hopper-bullet-mixed-v0 | HopperBulletEnv-v0 |
+| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 |
+| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 |
+| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 |
 
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
@@ -35,7 +41,7 @@ $ ./scripts/collect -e HopperbulletEnv-v0 -g
 ```
 
 ## contribution
-Welcome to contributions!!
+Any contributions will be welcomed!!
 
 ### coding style
 This repository is formatted with [yapf](https://github.com/google/yapf).
