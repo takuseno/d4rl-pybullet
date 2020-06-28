@@ -10,9 +10,11 @@ Thus, `d4rl_pybullet.offline_env` is directly copied from [d4rl repository](http
 TODO.
 
 ## supported environments
-- HopperBulletEnv-v0
-- HalfCheetahBulletEnv-v0
-- Walker2DBulletEnv-v0
+| id | task | description |
+|:-:|:-:|:-|
+| hopper-bullet-random-v0 | HopperBulletEnv-v0 | datasets randomly sampled from HopperBulletEnv-v0 |
+| hopper-bullet-medium-v0 | HopperBulletEnv-v0 | datasets sampled with the medium-level policy from HopperBulletEnv-v0 |
+| hopper-bullet-mixed-v0 | HopperBulletEnv-v0 | datasets sampled during policy training from HopperBulletEnv-v0 |
 
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
