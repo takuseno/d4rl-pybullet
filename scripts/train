@@ -1,0 +1,23 @@
+#!/bin/bash -eux
+
+FLAG_G="FALSE"
+
+while getopts e:g OPT
+do
+  case $OPT in
+    "e" ) ENV=$OPTARG ;;
+    "g" ) FLAG_G="TRUE" ;;
+      * ) echo "Usage: ./scripts/train -e HopperBulletEnv-v0 [-g]" 1>&2
+          exit 1 ;;
+  esac
+done
+
+if [ "$FLAG_G" = "TRUE" ]; then
+  GPU_OPTION="--gpu"
+else
+  GPU_OPTION=""
+fi
+
+python -m d4rl_pybullet.train --env $ENV --seed 0 $GPU_OPTION
+python -m d4rl_pybullet.train --env $ENV --seed 1 $GPU_OPTION
+python -m d4rl_pybullet.train --env $ENV --seed 2 $GPU_OPTION
