@@ -24,6 +24,6 @@ python -m d4rl_pybullet.collect --env $ENV --seed 1 $GPU_OPTION
 python -m d4rl_pybullet.collect --env $ENV --seed 2 $GPU_OPTION
 
 # policy collection
-python -m d4rl_pybullet.collect --env $ENV --load logs/$ENV_0/final_model.pt $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --load logs/$ENV_1/final_model.pt $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --load logs/$ENV_2/final_model.pt $GPU_OPTION
+python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_0/final_model.pt $GPU_OPTION
+python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_1/final_model.pt $GPU_OPTION
+python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_2/final_model.pt $GPU_OPTION

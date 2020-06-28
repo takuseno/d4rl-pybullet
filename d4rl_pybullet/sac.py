@@ -168,9 +168,9 @@ class SAC:
     def save(self, fname):
         torch.save(
             {
-                'actor': self.actor,
-                'critic1': self.critic1,
-                'critic2': self.critic2,
+                'actor': self.actor.state_dict(),
+                'critic1': self.critic1.state_dict(),
+                'critic2': self.critic2.state_dict(),
             }, fname)
 
     def load(self, fname):
