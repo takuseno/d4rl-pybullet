@@ -1,29 +1,26 @@
 #!/bin/bash -eux
 
-FLAG_G="FALSE"
+GPU_OPTION=""
+N_SEEDS=3
 
-while getopts e:g OPT
+while getopts e:gn: OPT
 do
   case $OPT in
     "e" ) ENV=$OPTARG ;;
-    "g" ) FLAG_G="TRUE" ;;
-      * ) echo "Usage: ./scripts/collect -e HopperBulletEnv-v0 [-g]" 1>&2
+    "g" ) GPU_OPTION="--gpu" ;;
+    "n" ) N_SEEDS=$OPTARG ;;
+      * ) echo "Usage: ./scripts/collect -e HopperBulletEnv-v0 [-g] [-n 5]" 1>&2
           exit 1 ;;
   esac
 done
 
-if [ "$FLAG_G" = "TRUE" ]; then
-  GPU_OPTION="--gpu"
-else
-  GPU_OPTION=""
-fi
+for ((i=0; i < $N_SEEDS; i++)); do
+  # random collection
+  python -m d4rl_pybullet.collect --env $ENV --seed $i $GPU_OPTION
 
-# random collection
-python -m d4rl_pybullet.collect --env $ENV --seed 0 $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --seed 1 $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --seed 2 $GPU_OPTION
-
-# policy collection
-python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_0/final_model.pt $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_1/final_model.pt $GPU_OPTION
-python -m d4rl_pybullet.collect --env $ENV --load logs/${ENV}_2/final_model.pt $GPU_OPTION
+  # policy collection
+  python -m d4rl_pybullet.collect --env $ENV
+                                  --seed $i \
+                                  --load logs/${ENV}_$i/final_model.pt \
+                                  $GPU_OPTION
+done
