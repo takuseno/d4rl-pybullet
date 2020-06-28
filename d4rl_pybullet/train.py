@@ -33,11 +33,9 @@ def update(buffer, sac, batch_size):
 
     actor_loss = sac.update_actor(obs_ts)
 
-    temp_loss = sac.update_temp(obs_ts)
-
     sac.update_target()
 
-    return critic_loss, actor_loss, temp_loss
+    return critic_loss, actor_loss
 
 
 def train(env,
@@ -71,6 +69,9 @@ def train(env,
 
             if step % save_interval == 0:
                 sac.save(os.path.join(logdir, 'model_%d.pt' % step))
+
+        if ter_t:
+            buffer.append([obs_t, np.zeros_like(act_t), [rew_t], [ter_t]])
 
         logger.add('reward', step, episode_rew)
 
