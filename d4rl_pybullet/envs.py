@@ -10,23 +10,23 @@ from .offline_env import OfflineEnv
 
 class OfflineHopperBulletEnv(HopperBulletEnv, OfflineEnv):
     def __init__(self, **kwargs):
-        HopperBulletEnv.__init__(self,)
+        HopperBulletEnv.__init__(self, )
         OfflineEnv.__init__(self, **kwargs)
 
 
 class OfflineHalfCheetahBulletEnv(HalfCheetahBulletEnv, OfflineEnv):
     def __init__(self, **kwargs):
-        HalfCheetahBulletEnv.__init__(self,)
+        HalfCheetahBulletEnv.__init__(self, )
         OfflineEnv.__init__(self, **kwargs)
 
 
 class OfflineWalker2DBulletEnv(Walker2DBulletEnv, OfflineEnv):
     def __init__(self, **kwargs):
-        Walker2DBulletEnv.__init__(self,)
+        Walker2DBulletEnv.__init__(self, )
         OfflineEnv.__init__(self, **kwargs)
 
 
 class OfflineAntBulletEnv(AntBulletEnv, OfflineEnv):
     def __init__(self, **kwargs):
-        AntBulletEnv.__init__(self,)
+        AntBulletEnv.__init__(self, )
         OfflineEnv.__init__(self, **kwargs)
