@@ -8,7 +8,7 @@ import argparse
 from datetime import datetime
 from .sac import SAC, seed_everything
 from .logger import SimpleLogger
-from .utility import save_hdf5
+from .utility import save_buffer
 
 
 def update(buffer, sac, batch_size):
@@ -76,26 +76,12 @@ def train(env,
         logger.add('reward', step, episode_rew)
 
     # save final buffer
-    observations = []
-    actions = []
-    rewards = []
-    terminals = []
-    for i in range(len(buffer)):
-        observations.append(buffer[i][0])
-        actions.append(buffer[i][1])
-        rewards.append(buffer[i][2])
-        terminals.append(buffer[i][3])
-
-    observations = np.array(observations, dtype=np.float32)
-    actions = np.array(actions, dtype=np.float32)
-    rewards = np.array(rewards, dtype=np.float32)
-    terminals = np.array(terminals, dtype=np.float32)
-
-    buffer_path = os.path.join(logdir, 'buffer.hdf5')
-    save_hdf5(observations, actions, rewards, terminals, buffer_path)
+    save_buffer(buffer, logdir)
+    print('Final buffer has been saved.')
 
     # save final parameters
     sac.save(os.path.join(logdir, 'final_model.pt'))
+    print('Final model parameters have been saved.')
 
 
 if __name__ == '__main__':

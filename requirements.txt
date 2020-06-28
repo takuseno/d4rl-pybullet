@@ -4,3 +4,4 @@ pybullet==2.8.2
 git+git://github.com/aravindr93/mjrl@master#egg=mjrl
 git+https://github.com/rail-berkeley/d4rl@master#egg=d4rl
 h5py==2.10.0
+tqdm==4.46.1
