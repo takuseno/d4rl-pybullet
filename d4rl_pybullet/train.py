@@ -41,7 +41,7 @@ def update(buffer, sac, batch_size):
 def train(env,
           sac,
           logdir,
-          final_step=200000,
+          final_step=100000,
           batch_size=100,
           save_interval=10000):
     logger = SimpleLogger(logdir)
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str)
     parser.add_argument('--seed', type=int, default=0)
-    parser.add_argument('--final-step', type=float, default=200000)
+    parser.add_argument('--final-step', type=float, default=100000)
     parser.add_argument('--gpu', action='store_true')
     args = parser.parse_args()
 
