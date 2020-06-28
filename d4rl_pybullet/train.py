@@ -19,7 +19,7 @@ def update(buffer, sac, batch_size):
     while len(obs_ts) != batch_size:
         index = np.random.randint(len(buffer) - 1)
         # skip if index indicates the terminal state
-        if buffer[index][3]:
+        if buffer[index][3][0]:
             continue
         obs_ts.append(buffer[index][0])
         act_ts.append(buffer[index][1])
@@ -110,7 +110,7 @@ if __name__ == '__main__':
 
     observation_size = env.observation_space.shape[0]
     action_size = env.action_space.shape[0]
-    device = 'gpu:0' if args.gpu else 'cpu:0'
+    device = 'cuda:0' if args.gpu else 'cpu:0'
 
     sac = SAC(observation_size, action_size, device)
 
