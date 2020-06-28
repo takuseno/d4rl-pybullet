@@ -1,0 +1,9 @@
+#!/bin/bash -eux
+
+if [ $# = 0 ]; then
+  YAPF_ARG="-i"
+else
+  YAPF_ARG=$*
+fi
+
+yapf -r -vv $YAPF_ARG d4rl_pybullet

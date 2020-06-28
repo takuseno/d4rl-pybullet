@@ -26,7 +26,6 @@ def _squash_action(dist, raw_action):
     return squashed_action, log_prob
 
 
-
 def _soft_sync(targ_model, model, tau):
     with torch.no_grad():
         params = model.parameters()
@@ -51,7 +50,6 @@ class Actor(nn.Module):
         logstd = self.logstd(h)
         clipped_logstd = logstd.clamp(-20.0, 2.0)
         return Normal(mu, clipped_logstd.exp())
-
 
     def forward(self, x, with_log_prob=False, deterministic=False):
         dist = self.dist(x)
@@ -187,11 +185,11 @@ class SAC:
 
     def save(self, fname):
         torch.save(
-                {
-                    'actor': self.actor,
-                    'critic1': self.critic1,
-                    'critic2': self.critic2,
-                }, fname)
+            {
+                'actor': self.actor,
+                'critic1': self.critic1,
+                'critic2': self.critic2,
+            }, fname)
 
     def load(self, fname):
         chkpt = torch.load(fname)
