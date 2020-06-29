@@ -13,8 +13,8 @@ from .utility import save_buffer
 DESIRED_LEVELS = {
     'HopperBulletEnv-v0': 1000.0,
     'HalfCheetahBulletEnv-v0': 800.0,
-    'AntBulletEnv-v0': 600.0,
-    'Walker2DBulletEnv-v0': 900.0,
+    'AntBulletEnv-v0': 800.0,
+    'Walker2DBulletEnv-v0': 1200.0,
 }
 
 
