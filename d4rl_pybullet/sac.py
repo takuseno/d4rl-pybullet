@@ -87,19 +87,18 @@ class SAC:
                  device,
                  learning_rate=1e-3,
                  gamma=0.99,
-                 tau=0.005,
-                 alpha=0.01):
+                 tau=0.005):
         self.observation_size = observation_size
         self.action_size = action_size
         self.gamma = gamma
         self.tau = tau
-        self.alpha = alpha
 
         self.actor = Actor(observation_size, action_size)
         self.critic1 = Critic(observation_size, action_size)
         self.critic2 = Critic(observation_size, action_size)
         self.targ_critic1 = copy.deepcopy(self.critic1)
         self.targ_critic2 = copy.deepcopy(self.critic2)
+        self.log_temp = nn.Parameter(torch.zeros(1, 1, device=device))
 
         self.actor.to(device)
         self.critic1.to(device)
@@ -112,6 +111,7 @@ class SAC:
         critic_parameters = chain(self.critic1.parameters(),
                                   self.critic2.parameters())
         self.critic_optim = Adam(critic_parameters, lr=learning_rate)
+        self.temp_optim = Adam([self.log_temp], lr=learning_rate)
 
     def act(self, x, deterministic=False):
         with torch.no_grad():
@@ -130,7 +130,7 @@ class SAC:
             act_tp1, log_prob = self.actor(obs_tp1, with_log_prob=True)
             q1_tp1 = self.targ_critic1(obs_tp1, act_tp1)
             q2_tp1 = self.targ_critic2(obs_tp1, act_tp1)
-            target = torch.min(q1_tp1, q2_tp1) - self.alpha * log_prob
+            target = torch.min(q1_tp1, q2_tp1) - self.log_temp.exp() * log_prob
 
         y = rew_tp1 + self.gamma * target * (1.0 - ter_tp1)
 
@@ -153,11 +153,26 @@ class SAC:
         q2_t = self.critic2(obs_t, act_t)
         q_t = torch.min(q1_t, q2_t)
 
-        loss = (self.alpha * log_prob - q_t).mean()
+        loss = (self.log_temp.exp() * log_prob - q_t).mean()
 
         self.actor_optim.zero_grad()
         loss.backward()
         self.actor_optim.step()
+
+        return loss.cpu().detach().numpy()
+
+    def update_temp(self, obs_t):
+        obs_t = torch.tensor(obs_t, device=self.device).float()
+
+        with torch.no_grad():
+            _, log_prob = self.actor(obs_t, with_log_prob=True)
+            targ_temp = log_prob - self.action_size
+
+        loss = -(self.log_temp.exp() * targ_temp).mean()
+
+        self.temp_optim.zero_grad()
+        loss.backward()
+        self.temp_optim.step()
 
         return loss.cpu().detach().numpy()
 

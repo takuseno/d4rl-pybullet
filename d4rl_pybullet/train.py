@@ -33,9 +33,11 @@ def update(buffer, sac, batch_size):
 
     actor_loss = sac.update_actor(obs_ts)
 
+    temp_loss = sac.update_temp(obs_ts)
+
     sac.update_target()
 
-    return critic_loss, actor_loss
+    return critic_loss, actor_loss, temp_loss
 
 
 def train(env,
