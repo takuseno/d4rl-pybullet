@@ -39,14 +39,14 @@ dataset['terminals'] # terminal flags in N x 1
 - `medium` denotes datasets sampled with a medium-level policy.
 - `mixed` denotes datasets collected during policy training.
 
-| id | task |
-|:-|:-:|
-| hopper-bullet-random-v0 | HopperBulletEnv-v0 |
-| hopper-bullet-medium-v0 | HopperBulletEnv-v0 |
-| hopper-bullet-mixed-v0 | HopperBulletEnv-v0 |
-| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 |
-| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 |
-| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 |
+| id | task | mean reward | std reward | max reward | min reward |
+|:-|:-:|:-|:-|:-|:-|
+| hopper-bullet-random-v0 | HopperBulletEnv-v0 | | | | |
+| hopper-bullet-medium-v0 | HopperBulletEnv-v0 | | | | |
+| hopper-bullet-mixed-v0 | HopperBulletEnv-v0 | | | | |
+| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 | | | | |
+| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 | | | | |
+| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 | | | | |
 
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
@@ -56,9 +56,15 @@ $ ./scripts/train -e HopperBulletEnv-v0 -g -n 1
 ```
 
 ## data collection
-You can collect datasets with the trained policy and random policy.
+You can collect datasets with the trained policy.
 ```
 $ ./scripts/collect -e HopperBulletEnv-v0 -g -n 1
+```
+
+## data collection with randomly initialized policy
+You can collect datasets with the random policy.
+```
+$ ./scripts/random_collect -e HopperBulletEnv-v0 -g -n 1
 ```
 
 ## contribution
