@@ -15,7 +15,7 @@ do
 done
 
 for ((i=0; i < $N_SEEDS; i++)); do
-  python -m d4rl_pybullet.collect --env $ENV
+  python -m d4rl_pybullet.collect --env $ENV \
                                   --seed $i \
                                   --load logs/${ENV}_$i/final_model.pt \
                                   $GPU_OPTION
