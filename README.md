@@ -34,19 +34,19 @@ dataset['rewards'] # reward data in N x 1
 dataset['terminals'] # terminal flags in N x 1 
 ```
 
-## supported environments
+## available datasets
 - `random` denotes datasets sampled with a randomly initialized policy.
 - `medium` denotes datasets sampled with a medium-level policy.
 - `mixed` denotes datasets collected during policy training.
 
-| id | task | mean reward | std reward | max reward | min reward |
-|:-|:-:|:-|:-|:-|:-|
-| hopper-bullet-random-v0 | HopperBulletEnv-v0 | | | | |
-| hopper-bullet-medium-v0 | HopperBulletEnv-v0 | | | | |
-| hopper-bullet-mixed-v0 | HopperBulletEnv-v0 | | | | |
-| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 | | | | |
-| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 | | | | |
-| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 | | | | |
+| id | task | mean reward | std reward | max reward | min reward | samples |
+|:-|:-:|:-|:-|:-|:-|:-|
+| hopper-bullet-random-v0 | HopperBulletEnv-v0 | 18.64 | 3.04 | 53.21 | -8.58 | 1000000 |
+| hopper-bullet-medium-v0 | HopperBulletEnv-v0 | 1078.36 | 325.52 | 1238.9569 | 220.23 | 1000000 |
+| hopper-bullet-mixed-v0 | HopperBulletEnv-v0 | 139.08 | 147.62 | 1019.94 | 9.15 | 59345 |
+| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 | | | | | |
+| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 | | | | | |
+| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 | | | | | |
 
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
