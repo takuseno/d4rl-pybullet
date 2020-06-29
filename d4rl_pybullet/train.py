@@ -10,7 +10,6 @@ from .sac import SAC, seed_everything
 from .logger import SimpleLogger
 from .utility import save_buffer
 
-
 DESIRED_LEVELS = {
     'HopperBulletEnv-v0': 1000.0,
     'HalfCheetahBulletEnv-v0': 800.0,
