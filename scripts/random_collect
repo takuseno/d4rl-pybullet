@@ -9,11 +9,11 @@ do
     "e" ) ENV=$OPTARG ;;
     "g" ) GPU_OPTION="--gpu" ;;
     "n" ) N_SEEDS=$OPTARG ;;
-      * ) echo "Usage: ./scripts/train -e HopperBulletEnv-v0 [-g] [-n 5]" 1>&2
+      * ) echo "Usage: ./scripts/collect -e HopperBulletEnv-v0 [-g] [-n 5]" 1>&2
           exit 1 ;;
   esac
 done
 
 for ((i=0; i < $N_SEEDS; i++)); do
-  python -m d4rl_pybullet.train --env $ENV --seed $i $GPU_OPTION
+  python -m d4rl_pybullet.collect --env $ENV --seed $i $GPU_OPTION
 done

@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 GPU_OPTION=""
-N_SEEDS=3
+N_SEEDS=1
 
 while getopts e:gn: OPT
 do
@@ -15,10 +15,6 @@ do
 done
 
 for ((i=0; i < $N_SEEDS; i++)); do
-  # random collection
-  python -m d4rl_pybullet.collect --env $ENV --seed $i $GPU_OPTION
-
-  # policy collection
   python -m d4rl_pybullet.collect --env $ENV
                                   --seed $i \
                                   --load logs/${ENV}_$i/final_model.pt \
