@@ -44,9 +44,9 @@ dataset['terminals'] # terminal flags in N x 1
 | hopper-bullet-random-v0 | HopperBulletEnv-v0 | 18.64 | 3.04 | 53.21 | -8.58 | 1000000 |
 | hopper-bullet-medium-v0 | HopperBulletEnv-v0 | 1078.36 | 325.52 | 1238.9569 | 220.23 | 1000000 |
 | hopper-bullet-mixed-v0 | HopperBulletEnv-v0 | 139.08 | 147.62 | 1019.94 | 9.15 | 59345 |
-| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 | | | | | |
-| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 | | | | | |
-| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 | | | | | |
+| halfcheetah-bullet-random-v0 | HalfCheetahBulletEnv-v0 | -1304.49 | 99.30 | -945.29 | -1518.58 | 1000000 |
+| halfcheetah-bullet-medium-v0 | HalfCheetahBulletEnv-v0 | 787.35 | 104.31 | 844.91 | -522.57 | 1000000 |
+| halfcheetah-bullet-mixed-v0 | HalfCheetahBulletEnv-v0 | 453.12 | 498.19 | 801.02 | -1428.22 | 178178 |
 
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
