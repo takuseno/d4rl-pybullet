@@ -55,7 +55,7 @@ class Actor(nn.Module):
         dist = self.dist(x)
 
         if deterministic:
-            action = dist.mean()
+            action = dist.mean
         else:
             action = dist.rsample()
 

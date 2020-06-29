@@ -9,7 +9,7 @@ from .sac import SAC, seed_everything
 from .utility import save_buffer
 
 
-def collect(env, sac, logdir, final_step=1000000):
+def collect(env, sac, logdir, final_step, deterministic):
     buffer = []
 
     step = 0
@@ -19,7 +19,7 @@ def collect(env, sac, logdir, final_step=1000000):
         ter_t = False
         rew_t = 0.0
         while step < final_step and not ter_t:
-            act_t = sac.act([obs_t])[0]
+            act_t = sac.act([obs_t], deterministic=deterministic)[0]
 
             buffer.append([obs_t, act_t, [rew_t], [ter_t]])
 
@@ -57,10 +57,12 @@ if __name__ == '__main__':
     if args.load:
         sac.load(args.load)
         name = 'medium'
+        deterministic = True
     else:
         name = 'random'
+        deterministic = False
 
     logdir = os.path.join('logs', '{}_{}_{}'.format(args.env, name, args.seed))
     os.makedirs(logdir)
 
-    collect(env, sac, logdir, args.final_step)
+    collect(env, sac, logdir, args.final_step, deterministic)
