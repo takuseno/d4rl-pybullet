@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import numpy as np
+import h5py
+import sys
+
+
+dataset_file = h5py.File(sys.argv[1], 'r')
+keys = []
+def visitor(name, item):
+    if isinstance(item, h5py.Dataset):
+        keys.append(name)
+dataset_file.visititems(visitor)
+data_dict = {k: dataset_file[k][:] for k in keys}
+dataset_file.close()
+
+rewards = data_dict['rewards']
+terminals = data_dict['terminals']
+
+episode_rewards = []
+episode_reward = 0.0
+for reward, terminal in zip(rewards, terminals):
+    episode_reward += reward
+    if terminal:
+        episode_rewards.append(episode_reward)
+        episode_reward = 0.0
+
+print('mean reward = ', np.mean(episode_rewards))
+print('std reward  = ', np.std(episode_rewards))
+print('min reward  = ', np.min(episode_rewards))
+print('max reward  = ', np.max(episode_rewards))
+print('samples     = ', rewards.shape[0])
