@@ -71,3 +71,27 @@ register(
         'dataset_url':
         'https://www.dropbox.com/s/2xpmh4wk2m7i8xh/ant-bullet-random-v0.hdf5?dl=1'
     })
+
+register(
+    id='walker2d-bullet-medium-v0',
+    entry_point='d4rl_pybullet.envs:OfflineWalker2DBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/v0f2kz48b1hw6or/walker2d-bullet-medium-v0.hdf5?dl=1'
+    })
+
+register(
+    id='walker2d-bullet-mixed-v0',
+    entry_point='d4rl_pybullet.envs:OfflineWalker2DBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/i4u2ii0d85iblou/walker2d-bullet-mixed-v0.hdf5?dl=1'
+    })
+
+register(
+    id='walker2d-bullet-random-v0',
+    entry_point='d4rl_pybullet.envs:OfflineWalker2DBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/1gwcfl2nmx6878m/walker2d-bullet-random-v0.hdf5?dl=1'
+    })
