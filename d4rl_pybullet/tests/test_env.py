@@ -1,9 +1,15 @@
+import pytest
+
 import gym
 import d4rl_pybullet
 
 
-def test_env():
-    env = gym.make('hopper-bullet-mixed-v0')
+@pytest.mark.parametrize('name', [
+    'hopper-bullet-mixed-v0', 'halfcheetah-bullet-mixed-v0',
+    'ant-bullet-mixed-v0'
+])
+def test_env(name):
+    env = gym.make(name)
 
     dataset = env.get_dataset()
     assert 'observations' in dataset
