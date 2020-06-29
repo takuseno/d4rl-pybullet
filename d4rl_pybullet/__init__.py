@@ -47,3 +47,27 @@ register(
         'dataset_url':
         'https://www.dropbox.com/s/jnvpb1hp60zt2ak/halfcheetah-bullet-random-v0.hdf5?dl=1'
     })
+
+register(
+    id='ant-bullet-medium-v0',
+    entry_point='d4rl_pybullet.envs:OfflineAntBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/6n79kwd94xthr1t/ant-bullet-medium-v0.hdf5?dl=1'
+    })
+
+register(
+    id='ant-bullet-mixed-v0',
+    entry_point='d4rl_pybullet.envs:OfflineAntBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/pmy3dzab35g4whk/ant-bullet-mixed-v0.hdf5?dl=1'
+    })
+
+register(
+    id='ant-bullet-random-v0',
+    entry_point='d4rl_pybullet.envs:OfflineAntBulletEnv',
+    kwargs={
+        'dataset_url':
+        'https://www.dropbox.com/s/2xpmh4wk2m7i8xh/ant-bullet-random-v0.hdf5?dl=1'
+    })
