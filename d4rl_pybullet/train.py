@@ -11,6 +11,14 @@ from .logger import SimpleLogger
 from .utility import save_buffer
 
 
+DESIRED_LEVELS = {
+    'HopperBulletEnv-v0': 1000.0,
+    'HalfCheetahBulletEnv-v0': 800.0,
+    'AntBulletEnv-v0': 600.0,
+    'Walker2DBulletEnv-v0': 900.0,
+}
+
+
 def update(buffer, sac, batch_size):
     obs_ts = []
     act_ts = []
@@ -43,7 +51,7 @@ def update(buffer, sac, batch_size):
 def train(env,
           sac,
           logdir,
-          final_step=100000,
+          desired_level,
           batch_size=100,
           save_interval=10000):
     logger = SimpleLogger(logdir)
@@ -51,12 +59,12 @@ def train(env,
     buffer = []
 
     step = 0
-    while step < final_step:
+    while True:
         obs_t = env.reset()
         ter_t = False
         rew_t = 0.0
         episode_rew = 0.0
-        while step < final_step and not ter_t:
+        while not ter_t:
             act_t = sac.act([obs_t])[0]
 
             buffer.append([obs_t, act_t, [rew_t], [ter_t]])
@@ -77,6 +85,9 @@ def train(env,
 
         logger.add('reward', step, episode_rew)
 
+        if episode_rew >= desired_level:
+            break
+
     # save final buffer
     save_buffer(buffer, logdir)
     print('Final buffer has been saved.')
@@ -90,7 +101,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str)
     parser.add_argument('--seed', type=int, default=0)
-    parser.add_argument('--final-step', type=float, default=100000)
+    parser.add_argument('--desired-level', type=float)
     parser.add_argument('--gpu', action='store_true')
     args = parser.parse_args()
 
@@ -107,4 +118,9 @@ if __name__ == '__main__':
     logdir = os.path.join('logs', '{}_{}'.format(args.env, args.seed))
     os.makedirs(logdir)
 
-    train(env, sac, logdir, args.final_step)
+    if args.desired_level is None:
+        if args.env not in DESIRED_LEVELS:
+            raise ValueError('--desired-level must be designated.')
+        args.desired_level = DESIRED_LEVELS[args.env]
+
+    train(env, sac, logdir, args.desired_level)
