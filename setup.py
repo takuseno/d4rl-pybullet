@@ -6,5 +6,5 @@ setup(name="d4rl_pybullet",
       license="MIT",
       description="Datasets for data-driven deep reinforcement learnig with Pybullet environments",
       url="https://github.com/takuseno/d4rl-pybullet",
-      install_requires=["torch", "gym", "pybullet", "h5py"],
+      install_requires=["gym", "pybullet", "h5py"],
       packages=find_packages())
