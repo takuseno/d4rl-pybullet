@@ -13,6 +13,11 @@ However, currently, it is impossible to import d4rl without checking MuJoCo
 activation keys, which fails the program.
 Thus, `d4rl_pybullet.offline_env` is directly copied from [d4rl repository](https://github.com/rail-berkeley/d4rl/blob/1899859e3ebdac8f587abbe9cb1663761be69141/d4rl/offline_env.py).
 
+## install
+```
+$ pip install git+https://github.com/takuseno/d4rl-pybullet
+```
+
 ## usage
 The API is mostly identical to the original d4rl.
 ```py
