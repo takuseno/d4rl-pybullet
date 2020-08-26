@@ -2,18 +2,20 @@
 
 GPU_OPTION=""
 N_SEEDS=1
+DESIRED_LEVEL=""
 
-while getopts e:gn: OPT
+while getopts e:g:n:d: OPT
 do
   case $OPT in
     "e" ) ENV=$OPTARG ;;
-    "g" ) GPU_OPTION="--gpu" ;;
+    "g" ) GPU_OPTION="--gpu $OPTARG" ;;
+    "d" ) DESIRED_LEVEL="--desired-level $OPTARG" ;;
     "n" ) N_SEEDS=$OPTARG ;;
-      * ) echo "Usage: ./scripts/train -e HopperBulletEnv-v0 [-g] [-n 5]" 1>&2
+      * ) echo "Usage: ./scripts/train -e HopperBulletEnv-v0 [-g GPU_DEVICE] [-n N_SEEDS] [-d DESIRED_LEVEL]" 1>&2
           exit 1 ;;
   esac
 done
 
 for ((i=0; i < $N_SEEDS; i++)); do
-  python -m d4rl_pybullet.train --env $ENV --seed $i $GPU_OPTION
+  python -m d4rl_pybullet.train --env $ENV --seed $i $GPU_OPTION $DESIRED_LEVEL
 done

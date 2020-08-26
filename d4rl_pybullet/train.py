@@ -10,13 +10,6 @@ from .sac import SAC, seed_everything
 from .logger import SimpleLogger
 from .utility import save_buffer
 
-DESIRED_LEVELS = {
-    'HopperBulletEnv-v0': 1000.0,
-    'HalfCheetahBulletEnv-v0': 800.0,
-    'AntBulletEnv-v0': 700.0,
-    'Walker2DBulletEnv-v0': 1300.0,
-}
-
 
 def update(buffer, sac, batch_size):
     obs_ts = []
@@ -51,6 +44,7 @@ def train(env,
           sac,
           logdir,
           desired_level,
+          total_step,
           batch_size=100,
           save_interval=10000):
     logger = SimpleLogger(logdir)
@@ -58,12 +52,12 @@ def train(env,
     buffer = []
 
     step = 0
-    while True:
+    while step < total_step:
         obs_t = env.reset()
         ter_t = False
         rew_t = 0.0
         episode_rew = 0.0
-        while not ter_t:
+        while not ter_t and step < total_step:
             act_t = sac.act([obs_t])[0]
 
             buffer.append([obs_t, act_t, [rew_t], [ter_t]])
@@ -84,7 +78,7 @@ def train(env,
 
         logger.add('reward', step, episode_rew)
 
-        if episode_rew >= desired_level:
+        if desired_level is not None and episode_rew >= desired_level:
             break
 
     # save final buffer
@@ -101,7 +95,8 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str)
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--desired-level', type=float)
-    parser.add_argument('--gpu', action='store_true')
+    parser.add_argument('--total-step', type=int, default=2000000)
+    parser.add_argument('--gpu', type=int)
     args = parser.parse_args()
 
     env = gym.make(args.env)
@@ -110,16 +105,11 @@ if __name__ == '__main__':
 
     observation_size = env.observation_space.shape[0]
     action_size = env.action_space.shape[0]
-    device = 'cuda:0' if args.gpu else 'cpu:0'
+    device = 'cuda:%d' % args.gpu if args.gpu is not None else 'cpu:0'
 
     sac = SAC(observation_size, action_size, device)
 
     logdir = os.path.join('logs', '{}_{}'.format(args.env, args.seed))
     os.makedirs(logdir)
 
-    if args.desired_level is None:
-        if args.env not in DESIRED_LEVELS:
-            raise ValueError('--desired-level must be designated.')
-        args.desired_level = DESIRED_LEVELS[args.env]
-
-    train(env, sac, logdir, args.desired_level)
+    train(env, sac, logdir, args.desired_level, args.total_step)

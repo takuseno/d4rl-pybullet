@@ -62,8 +62,8 @@ dataset['terminals'] # terminal flags in N x 1
 ## train policy
 You can train Soft Actor-Critic policy on your own machine.
 ```
-# giving -g option to enable GPU
-$ ./scripts/train -e HopperBulletEnv-v0 -g -n 1
+# giving -g option to choose GPU device
+$ ./scripts/train -e HopperBulletEnv-v0 -g 0 -n 1
 ```
 
 ## data collection
