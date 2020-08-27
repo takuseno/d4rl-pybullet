@@ -85,7 +85,7 @@ class SAC:
                  observation_size,
                  action_size,
                  device,
-                 learning_rate=1e-3,
+                 learning_rate=3e-4,
                  gamma=0.99,
                  tau=0.005):
         self.observation_size = observation_size
