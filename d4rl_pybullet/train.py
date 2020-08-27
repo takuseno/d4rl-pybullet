@@ -40,13 +40,29 @@ def update(buffer, sac, batch_size):
     return critic_loss, actor_loss, temp_loss
 
 
+def evaluate(env, sac, n_episodes=10):
+    episode_rews = []
+    for episode in range(n_episodes):
+        obs = env.reset()
+        ter = False
+        episode_rew = 0.0
+        while not ter:
+            act = sac.act([obs], deterministic=True)[0]
+            obs, rew, ter, _ = env.step(act)
+            episode_rew += rew
+        episode_rews.append(episode_rew)
+    return np.mean(episode_rews)
+
+
 def train(env,
+          eval_env,
           sac,
           logdir,
           desired_level,
           total_step,
           batch_size=100,
-          save_interval=10000):
+          save_interval=10000,
+          eval_interval=10000):
     logger = SimpleLogger(logdir)
 
     buffer = []
@@ -72,6 +88,9 @@ def train(env,
 
             if step % save_interval == 0:
                 sac.save(os.path.join(logdir, 'model_%d.pt' % step))
+
+            if step % eval_interval == 0:
+                logger.add('eval_reward', step, evaluate(eval_env, sac))
 
         if ter_t:
             buffer.append([obs_t, np.zeros_like(act_t), [rew_t], [ter_t]])
@@ -100,6 +119,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     env = gym.make(args.env)
+    eval_env = gym.make(args.env)
     env.seed(args.seed)
     seed_everything(args.seed)
 
@@ -112,4 +132,4 @@ if __name__ == '__main__':
     logdir = os.path.join('logs', '{}_{}'.format(args.env, args.seed))
     os.makedirs(logdir)
 
-    train(env, sac, logdir, args.desired_level, args.total_step)
+    train(env, eval_env, sac, logdir, args.desired_level, args.total_step)
