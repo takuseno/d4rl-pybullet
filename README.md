@@ -1,6 +1,7 @@
 ![format check](https://github.com/takuseno/d4rl-pybullet/workflows/format%20check/badge.svg)
 ![test](https://github.com/takuseno/d4rl-pybullet/workflows/test/badge.svg)
 ![MIT](https://img.shields.io/badge/license-MIT-blue)
+[![Gitter](https://img.shields.io/gitter/room/d3rlpy/d4rl-pybullet)](https://gitter.im/d3rlpy/d4rl-pybullet)
 
 # d4rl-pybullet
 Datasets for Data-Driven Deep Reinforcement Learning with Pybullet environments.
