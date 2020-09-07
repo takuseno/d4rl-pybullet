@@ -26,6 +26,8 @@ def get_keys(h5file):
 
 def filepath_from_url(dataset_url):
     _, dataset_name = os.path.split(dataset_url)
+    nm, _ = dataset_name.rsplit(".")
+    dataset_name = nm + ".hdf5"
     dataset_filepath = os.path.join(DATASET_PATH, dataset_name)
     return dataset_filepath
 
