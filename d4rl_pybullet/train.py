@@ -19,14 +19,20 @@ def update(buffer, sac, batch_size):
     ter_tp1s = []
     while len(obs_ts) != batch_size:
         index = np.random.randint(len(buffer) - 1)
+
         # skip if index indicates the terminal state
         if buffer[index][3][0]:
             continue
+
         obs_ts.append(buffer[index][0])
         act_ts.append(buffer[index][1])
         rew_tp1s.append(buffer[index + 1][2])
         obs_tp1s.append(buffer[index + 1][0])
-        ter_tp1s.append(buffer[index + 1][3])
+
+        # take timeout into account
+        terminal = buffer[index + 1][3][0]
+        timeout = buffer[index + 1][4][0]
+        ter_tp1s.append([terminal and not timeout])
 
     critic_loss = sac.update_critic(obs_ts, act_ts, rew_tp1s, obs_tp1s,
                                     ter_tp1s)
@@ -72,14 +78,16 @@ def train(env,
         obs_t = env.reset()
         ter_t = False
         rew_t = 0.0
+        timeout = False
         episode_rew = 0.0
         while not ter_t and step < total_step:
             act_t = sac.act([obs_t])[0]
 
-            buffer.append([obs_t, act_t, [rew_t], [ter_t]])
+            buffer.append([obs_t, act_t, [rew_t], [ter_t], [timeout]])
 
-            obs_t, rew_t, ter_t, _ = env.step(act_t)
+            obs_t, rew_t, ter_t, info = env.step(act_t)
 
+            timeout = "TimeLimit.truncated" in info
             episode_rew += rew_t
             step += 1
 
@@ -93,7 +101,8 @@ def train(env,
                 logger.add('eval_reward', step, evaluate(eval_env, sac))
 
         if ter_t:
-            buffer.append([obs_t, np.zeros_like(act_t), [rew_t], [ter_t]])
+            dummy_action = np.zeros_like(act_t)
+            buffer.append([obs_t, dummy_action, [rew_t], [ter_t], [timeout]])
 
         logger.add('reward', step, episode_rew)
 

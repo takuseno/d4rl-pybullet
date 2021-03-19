@@ -18,18 +18,21 @@ def collect(env, sac, logdir, final_step, deterministic):
         obs_t = env.reset()
         ter_t = False
         rew_t = 0.0
+        timeout = False
         while step < final_step and not ter_t:
             act_t = sac.act([obs_t], deterministic=deterministic)[0]
 
-            buffer.append([obs_t, act_t, [rew_t], [ter_t]])
+            buffer.append([obs_t, act_t, [rew_t], [ter_t], [timeout]])
 
-            obs_t, rew_t, ter_t, _ = env.step(act_t)
+            obs_t, rew_t, ter_t, info = env.step(act_t)
 
+            timeout = "TimeLimit.truncated" in info
             step += 1
             pbar.update(1)
 
         if ter_t:
-            buffer.append([obs_t, np.zeros_like(act_t), [rew_t], [ter_t]])
+            dummy_action = np.zeros_like(act_t)
+            buffer.append([obs_t, dummy_action, [rew_t], [ter_t], [timeout]])
 
     save_buffer(buffer[:final_step], logdir)
     print('Collected data has been saved.')
